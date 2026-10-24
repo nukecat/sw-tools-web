@@ -414,7 +414,7 @@ color: var(--text);
     justify-content: space-between;
     align-items: center;
     gap: 0.5em;
-    margin: 0.5em 0 0 0;
+    /* margin: 0.5em 0 0 0; */
 }
 
 .horizontal-slider .bottom .min,
