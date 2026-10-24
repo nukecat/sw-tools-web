@@ -704,3 +704,36 @@ code {
     width: 20px;
     height: 20px;
 }
+
+/* ==========================
+ *   Custom Scrollbars
+ * ========================== */
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--background);
+}
+
+/* For Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+    width: 10px;  /* Width of the vertical scrollbar */
+    height: 10px; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+    border-radius: 0.5em;
+    box-shadow: inset 0 0 0.5em var(--shadow);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 0.5em;
+    box-shadow: inset 0 0 0.5em var(--shadow);
+    transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #7fff7f; /* Color when you hover over the scroll handle */
+}
