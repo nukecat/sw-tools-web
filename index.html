@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light only">
+  <title>sw-tools-web</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="importmap">
+  {"imports":{"three":"./js/vendor/three.module.min.js"}}
+  </script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <div class="bar">
+    <div class="left">
+      <h4>sw-tools</h4>
+    </div>
+  </div>
+  <div class="container">
+    <div class="left-side-panel"></div>
+    <div class="content">
+      <p>Web version of <b>sw-tools</b>: generate and manipulate <b>Sandbox World</b> <b>.structure</b> files right in your browser. Nothing is uploaded.</p>
+      <p class="tabs">
+        <button class="tab active" data-tab="music">Music Player</button>
+        <button class="tab" data-tab="pixel">Pixel Art</button>
+        <button class="tab" data-tab="mesh">Mesh</button>
+        <button class="tab" data-tab="insert">Insert Data</button>
+        <button class="tab" data-tab="catalog">Catalog</button>
+      </p>
+      <section class="panel" id="panel-music">
+        <h1>Music Player</h1>
+        <p>Converts a <b>MIDI</b> file into a <b>.structure</b> with a microcontroller, a switch and one tone generator per pitch used. Flip the switch in Sandbox World to play the song. Results update as you change the file or settings.</p>
+        <div class="content-box">
+          <div class="settings" id="music-settings">
+            <div drop-zone="" data-input="midi-input" data-info="midi-info">
+              Drop MIDI file here, or click to upload.
+            </div><input type="file" id="midi-input" accept=".mid,.midi" hidden="">
+            <div class="center-box">
+              <span class="special-text" id="midi-info">No file</span>
+            </div>
+            <div class="field">
+              <span>Title on screen</span><input type="text" id="music-title" placeholder="defaults to file name">
+            </div>
+            <div class="collapsible-container">
+              <button class="collapsible-toggle collapsed">Options (Advanced)</button>
+              <div class="collapsible-content collapsed">
+                <div class="flex-column box">
+                  <div class="horizontal-slider" data-slider="minPitch" data-label="Minimal pitch" data-min="0" data-max="127" data-step="1" data-default="27">
+                    <div class="up">
+                      <input type="number">
+                    </div>
+                    <div class="bottom">
+                      <input type="range">
+                    </div>
+                  </div>
+                  <div class="horizontal-slider" data-slider="maxPitch" data-label="Maximal pitch" data-min="0" data-max="127" data-step="1" data-default="111">
+                    <div class="up">
+                      <input type="number">
+                    </div>
+                    <div class="bottom">
+                      <input type="range">
+                    </div>
+                  </div>
+                  <div class="horizontal-slider" data-slider="minVelocity" data-label="Minimal velocity" data-min="0" data-max="127" data-step="1" data-default="1">
+                    <div class="up">
+                      <input type="number">
+                    </div>
+                    <div class="bottom">
+                      <input type="range">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <span>Repeat</span><input type="checkbox" id="repeat">
+                  </div>
+                  <div class="field">
+                    <span>Include drums (channel 10)</span><input type="checkbox" id="drums">
+                  </div>
+                  <div class="field">
+                    <span>Draw on microcontroller screen</span><input type="checkbox" id="display" checked>
+                  </div><br>
+                  <button class="btn reset-btn" data-reset="">Reset Defaults</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="status" id="music-status">Choose a file</p>
+          <div class="result" id="music-result" hidden="">
+            <div class="box flex-column">
+              <p class="viewer-info status" id="music-info"></p>
+              <div class="flex-row align-center">
+                <button class="btn" id="music-play">▶ Play</button> <input type="range" id="music-seek" min="0" max="0" step="1" value="0" aria-label="Position" disabled> <span id="music-time" class="special-text">0:00 / 0:00</span>
+              </div>
+              <div class="field">
+                <span>Volume</span><input type="range" id="music-volume" min="0" max="1" step="0.01" value="0.4">
+              </div>
+              <p class="hint">Preview of the tone generators: sine waves switched on and off, as in the game. Loudness is approximate.</p>
+            </div><button class="btn accept" id="music-dl">Download .structure</button>
+          </div>
+        </div>
+      </section>
+      <section class="panel" id="panel-pixel" hidden="">
+        <h1>Pixel Art</h1>
+        <p>Turns an image (PNG, JPEG or BMP) into a <b>.structure</b> with one colored block per pixel. Keep images small: a structure holds at most 65535 blocks.</p>
+        <div class="content-box">
+          <div class="settings" id="pixel-settings">
+            <div drop-zone="" data-input="image-input" data-info="image-info">
+              Drop image here, or click to upload.
+            </div><input type="file" id="image-input" accept=".png,.jpg,.jpeg,.bmp" hidden="">
+            <div class="center-box">
+              <span class="special-text" id="image-info">No file</span>
+            </div>
+            <div class="field">
+              <span>Block</span><select id="pixel-block">
+              </select>
+            </div>
+            <div class="collapsible-container">
+              <button class="collapsible-toggle collapsed">Options (Advanced)</button>
+              <div class="collapsible-content collapsed">
+                <div class="flex-column box">
+                  <div class="horizontal-slider" data-slider="spacing" data-hard-min="0.001" data-hard-max="10000" data-label="Spacing" data-min="0.1" data-max="5" data-step="0.05" data-default="1">
+                    <div class="up">
+                      <input type="number">
+                    </div>
+                    <div class="bottom">
+                      <input type="range">
+                    </div>
+                  </div>
+                  <div class="horizontal-slider" data-slider="state" data-label="State value" data-min="0" data-max="1" data-step="0.01" data-default="0">
+                    <div class="up">
+                      <input type="number">
+                    </div>
+                    <div class="bottom">
+                      <input type="range">
+                    </div>
+                  </div><br>
+                  <button class="btn reset-btn" data-reset="">Reset Defaults</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="status" id="pixel-status">Choose a file</p>
+          <div class="result" id="pixel-result" hidden="">
+            <div class="viewer-slot"></div>
+            <p class="viewer-info status"></p><button class="btn accept" id="pixel-dl">Download .structure</button>
+          </div>
+        </div>
+      </section>
+      <section class="panel" id="panel-mesh" hidden="">
+        <h1>Mesh</h1>
+        <p>Turns a glTF model into a <b>.structure</b> built from thin plates or bars. Use a single-file <b>.glb</b>; a <b>.gltf</b> only works if everything is embedded.</p>
+        <div class="content-box">
+          <div class="settings" id="mesh-settings">
+            <div drop-zone="" data-input="mesh-input" data-info="mesh-info">
+              Drop .glb / .gltf here, or click to upload.
+            </div><input type="file" id="mesh-input" accept=".glb,.gltf" hidden="">
+            <div class="center-box">
+              <span class="special-text" id="mesh-info">No file</span>
+            </div>
+            <div class="field">
+              <span>Block</span><select id="mesh-block">
+              </select>
+            </div>
+            <div class="field">
+              <span>Mode</span><select id="mesh-mode">
+                <option value="hollow">
+                  Hollow (plates)
+                </option>
+                <option value="wireframe">
+                  Wireframe (bars)
+                </option>
+              </select>
+            </div>
+            <div class="collapsible-container">
+              <button class="collapsible-toggle collapsed">Options (Advanced)</button>
+              <div class="collapsible-content collapsed">
+                <div class="flex-column box">
+                  <div class="horizontal-slider" data-slider="thickness" data-hard-min="0.001" data-hard-max="10" data-label="Thickness" data-min="0.01" data-max="10" data-step="0.01" data-default="0.05">
+                    <div class="up">
+                      <input type="number">
+                    </div>
+                    <div class="bottom">
+                      <input type="range">
+                    </div>
+                  </div>
+                  <div class="horizontal-slider" data-slider="mergeAngle" data-hard-min="0" data-hard-max="180" data-label="Merge angle (degrees, 0 = off)" data-min="0" data-max="10" data-step="0.1" data-default="0.5">
+                    <div class="up">
+                      <input type="number">
+                    </div>
+                    <div class="bottom">
+                      <input type="range">
+                    </div>
+                  </div>
+                  <div class="horizontal-slider" data-slider="scale" data-hard-min="0.001" data-hard-max="10000" data-label="Scale" data-min="0.05" data-max="20" data-step="0.05" data-default="1">
+                    <div class="up">
+                      <input type="number">
+                    </div>
+                    <div class="bottom">
+                      <input type="range">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <span>Mirror</span><select id="mesh-mirror">
+                      <option value="x">
+                        x (front stays +Z)
+                      </option>
+                      <option value="z">
+                        z (turned 180°)
+                      </option>
+                      <option value="none">
+                        none
+                      </option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <span>Paint from glTF colors</span><input type="checkbox" id="paint" checked>
+                  </div><br>
+                  <button class="btn reset-btn" data-reset="">Reset Defaults</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="status" id="mesh-status">Choose a file</p>
+          <div class="result" id="mesh-result" hidden="">
+            <div class="viewer-slot"></div>
+            <p class="viewer-info status"></p><button class="btn accept" id="mesh-dl">Download .structure</button>
+          </div>
+        </div>
+      </section>
+      <section class="panel" id="panel-insert" hidden="">
+        <h1>Insert Data</h1>
+        <p>Writes the bytes of any file into a microcontroller's <code>data</code> array inside a <b>.structure</b>. The array must already exist in the script.</p>
+        <div class="content-box">
+          <div drop-zone="" data-input="structure-input" data-info="structure-info">
+            Drop .structure here, or click to upload.
+          </div><input type="file" id="structure-input" accept=".structure" hidden="">
+          <div class="center-box">
+            <span class="special-text" id="structure-info">No file</span>
+          </div>
+          <div drop-zone="" data-input="binary-input" data-info="binary-info">
+            Drop binary file here, or click to upload.
+          </div><input type="file" id="binary-input" accept="*" hidden="">
+          <div class="center-box">
+            <span class="special-text" id="binary-info">No file</span>
+          </div>
+          <div class="field">
+            <span>Microcontroller name (optional)</span><input type="text" id="insert-name">
+          </div><br>
+          <div class="field">
+            <span>Data array magic, hex (optional)</span><input type="text" id="insert-magic" placeholder="deadbeef">
+          </div>
+          <p class="hint">Only needed when the structure holds several microcontrollers or several data arrays.</p><button class="btn accept convert-btn" id="insert-btn">Insert and Download</button>
+          <p class="status" id="insert-status">Idle</p>
+        </div>
+      </section>
+      <section class="panel" id="panel-catalog" hidden="">
+        <h1>Catalog</h1>
+        <p>Everything the library knows about: blocks for <b>.structure</b> files, and props and terrain layers for <b>.swmap</b> maps. IDs are what the other tools accept.</p>
+        <div class="content-box">
+          <p class="tabs" id="catalog-tabs">
+            <button class="subtab active" data-cat="blocks">Blocks</button> <button class="subtab" data-cat="props">Props</button> <button class="subtab" data-cat="layers">Layers</button>
+          </p><br>
+          <p class="field">
+            <span>Search</span><input type="text" id="catalog-filter" placeholder="name, id, category..." autocomplete="off">
+          </p><br>
+          <div class="table-wrap">
+            <table>
+              <thead id="catalog-head"></thead>
+              <tbody id="catalog-body"></tbody>
+            </table>
+          </div>
+          <p class="status" id="catalog-status"></p>
+        </div>
+      </section>
+    </div>
+    <div class="right-side-panel"></div>
+  </div>
+  <div class="bar">
+    <div class="left" id="version">
+      loading…
+    </div>
+    <div class="right">
+      powered by <b>sw-tools</b> by <b>nukcat</b>
+    </div>
+  </div>
+</body>
+</html>
