@@ -23,15 +23,28 @@
     --dropbox-has-file: rgba(110,255,110,0.25);
 }
 
-body, html {
+html {
     font-family: sans-serif;
-    background-color: var(--background);
 }
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    position: relative;
+    margin: 0;
+}
+
+body::before {
+    content: "";
+    position: absolute; /* Keeps the background fixed in place while scrolling */
+    inset: 0;
+    background-image: url("../images/nukcat.png");
+    background-repeat: repeat;
+    background-size: 4em;
+    background-position: top left;
+    filter: contrast(1.25) saturate(0) brightness(0.25);
+    z-index: -1; /* Pushes the filtered background behind all other content */
 }
 
 p {
@@ -125,18 +138,6 @@ transform: scale(1.03);
     width: 100%;
     flex: 1;
     isolation: isolate;
-}
-
-.container:before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("../images/nukcat.png");
-    background-repeat: repeat;
-    background-size: 4em;
-    background-position: center;
-    filter: contrast(1.25) saturate(0) brightness(0.25);
-    z-index: -1;
 }
 
 .left-side-panel,
@@ -689,3 +690,17 @@ code {
 #music-seek { min-width: 6em; }
 #music-seek:disabled { opacity: 0.5; cursor: default; }
 .table-wrap td.num { text-align: right; }
+
+.github-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.github-icon {
+    width: 20px;
+    height: 20px;
+}

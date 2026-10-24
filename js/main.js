@@ -142,7 +142,7 @@ const results = {};   // latest output per tool: { bytes, name }
 
 async function setup() {
     await init();
-    $('version').textContent = `web v0.1.0 · lib v${sw.version()}`;
+    // $('version').textContent = `web v0.1.0 · lib v${sw.version()}`;
 
     // Tabs
     document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
