@@ -495,8 +495,8 @@ dependencies = [
 
 [[package]]
 name = "sw-tools"
-version = "0.6.0"
-source = "git+https://github.com/nukecat/sw-tools#a08b0e740cddedd53de8cfcb3b7e4a855fb69106"
+version = "0.7.0"
+source = "git+https://github.com/nukecat/sw-tools#17d74b0a1fcf1e5b51dd8fb1e54748c4500b6d6e"
 dependencies = [
  "clap",
  "glam",
@@ -509,7 +509,7 @@ dependencies = [
 
 [[package]]
 name = "sw-tools-web"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "serde_json",
  "sw-formats",

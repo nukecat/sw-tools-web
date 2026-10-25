@@ -43,7 +43,16 @@ pub fn music_player(
 ) -> Result<Box<[u8]>, JsValue> {
     let s = music_player::generate(
         midi,
-        &music_player::Options { min_pitch, max_pitch, min_velocity, repeat, include_drums, display, title },
+        &music_player::Options {
+            min_pitch,
+            max_pitch,
+            min_velocity,
+            repeat,
+            include_drums,
+            display,
+            title,
+            ..Default::default()
+        },
     )
     .map_err(err)?;
     bytes(&s)
