@@ -92,6 +92,7 @@ pub fn mesh(
     merge_angle: f32,
     scale: f32,
     mirror: &str,
+    value: f32,
 ) -> Result<MeshResult, JsValue> {
     let opts = mesh::Options {
         mode: if wireframe { mesh::Mode::Wireframe } else { mesh::Mode::Hollow },
@@ -105,6 +106,7 @@ pub fn mesh(
             "none" => mesh::Mirror::None,
             _ => mesh::Mirror::X,
         },
+        value,
     };
     let (s, stats) = mesh::generate(model, None, &opts).map_err(err)?;
     Ok(MeshResult {

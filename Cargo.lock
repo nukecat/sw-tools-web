@@ -495,8 +495,8 @@ dependencies = [
 
 [[package]]
 name = "sw-tools"
-version = "0.7.0"
-source = "git+https://github.com/nukecat/sw-tools#17d74b0a1fcf1e5b51dd8fb1e54748c4500b6d6e"
+version = "0.8.0"
+source = "git+https://github.com/nukecat/sw-tools#41a411a821551d52d622c5354161e57c576359d5"
 dependencies = [
  "clap",
  "glam",

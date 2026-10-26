@@ -195,7 +195,7 @@ async function setup() {
         job: async (f, stale) => {
             const input = await bytesOf(f);
             if (stale()) return;
-            const out = sw.pixel_art(input, $('pixel-block').value, sliders.spacing(), sliders.state());
+            const out = sw.pixel_art(input, $('pixel-block').value, sliders.spacing(), sliders.statePixel());
             results.pixel = { bytes: out, name: `${stem(f)}.structure` };
             $('pixel-result').querySelector('.viewer-info').textContent = showPreview('pixel', out, -1);
             return 'Done';
@@ -211,7 +211,7 @@ async function setup() {
             if (stale()) return;
             const r = sw.mesh(
                 input, $('mesh-mode').value === 'wireframe', sliders.thickness(), $('mesh-block').value,
-                $('paint').checked, sliders.mergeAngle(), sliders.scale(), $('mesh-mirror').value,
+                $('paint').checked, sliders.mergeAngle(), sliders.scale(), $('mesh-mirror').value, sliders.stateMesh()
             );
             const info = `${r.triangles} triangles -> ${r.blocks} blocks (${r.merged_quads} quads merged)`;
             const out = r.data;
